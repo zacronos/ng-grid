@@ -225,7 +225,7 @@
                 immed: true,
                 // indent: 4,
                 latedef: true,
-                newcap: true,
+                // newcap: true,
                 noarg: true,
                 sub: true,
                 // undef: true,
@@ -238,7 +238,9 @@
             src: [ 'src/**/*.js', 'plugins/**/*.js' ],
             spec: {
                 options: {
+                    camelcase: false,
                     globals: {
+                        $: false,
                         angular: false,
                         beforeEach: false,
                         browser: false,
@@ -251,12 +253,16 @@
                         module: false,
                         repeater: false,
                         runs: false,
+                        spyOn: false,
                         waits: false,
-                        waitsFor: false
+                        waitsFor: false,
+
+                        ngGridWYSIWYGPlugin: false,
+                        ngMidwayTester: false
                     }
                 },
                 files: {
-                    spec: ['test/**/*.js']
+                    spec: ['test/**/*.js', '!test/lib/**/*.js']
                 },
             }
         }
