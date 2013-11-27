@@ -34,10 +34,11 @@ Options
 -------
 
         opts = {
-                 columnOverrides: < hash of column override functions >,
-                 initialFilename: < export filename to use, defaults to "Export.csv" >,
-                 editableFilename: < whether to provide a text input for the user to set export filename, defaults to false >
-               }
+            columnOverrides: < hash of column override functions >,
+            initialFilename: < export filename to use, defaults to "Export.csv" >,
+            editableFilename: < whether to provide a text input for the user to set export filename, defaults to false >,
+            customDataWatcher: < function whose return value can be $watched to detect changed data >
+        }
 
 For arrays and objects you may want to override the default `JSON.stringify`
 conversion into strings.
