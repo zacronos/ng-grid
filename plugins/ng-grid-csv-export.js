@@ -13,6 +13,7 @@ function ngGridCsvExportPlugin (opts) {
     self.init = function(scope, grid, services) {
         self.grid = grid;
         self.scope = scope;
+        self.scope.csvExportFilename = opts.initialFilename||"Export.csv";
         function showDs() {
             var keys = [];
             var fieldNames = {};
@@ -62,8 +63,20 @@ function ngGridCsvExportPlugin (opts) {
             var csvDataLinkHtml = "<span class=\"csv-data-link-span\">";
             csvDataLinkHtml += "<br><a href=\"data:text/csv;charset=UTF-8,";
             csvDataLinkHtml += encodeURIComponent(csvData);
-            csvDataLinkHtml += "\" download=\"Export.csv\">CSV Export</a></br></span>" ;
+            csvDataLinkHtml += "\" download=\""+encodeURIComponent(self.scope.csvExportFilename).replace("'", "%27")+"\">CSV Export</a>";
+            if (opts.editableFilename) {
+                csvDataLinkHtml += " <input type='text' class='ng-grid-csv-export-filename' value='"+self.scope.csvExportFilename+"'/>";
+            }
+            csvDataLinkHtml += "</br></span>";
             fp.append(csvDataLinkHtml);
+            if (opts.editableFilename) {
+                var filenameInput = grid.$root.find(".ngFooterPanel .csv-data-link-span input.ng-grid-csv-export-filename");
+                filenameInput.on("change", function(event) {
+                    var csvDataLink = grid.$root.find(".ngFooterPanel .csv-data-link-span a");
+                    self.scope.csvExportFilename = event.currentTarget.value;
+                    csvDataLink.attr("download", self.scope.csvExportFilename);
+                });
+            }
         }
         setTimeout(showDs, 0);
         scope.catHashKeys = function() {
